@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour {
 
     public Wave[] waves;
-    private int currentWave;
+    public int currentWave;
     private bool spawningFinished;
     private bool waveRunning;
     private int aliveEnemies;
@@ -75,13 +75,23 @@ public class WaveManager : MonoBehaviour {
     {
         foreach(EnemyDirectory dir in wave.directories)
         {
-            for(int i = 0;i< dir.count;i++)
+            if (dir.count > 0)
             {
-                EnemyController newEnemy = Instantiate(dir.prefab, spawnPoint.position, spawnPoint.rotation, enemiesParent).GetComponent<EnemyController>();
-                SetupEnemyController(newEnemy);
+                for (int i = 0; i < dir.count; i++)
+                {
+                    EnemyController newEnemy = Instantiate(dir.prefab, spawnPoint.position, spawnPoint.rotation, enemiesParent).GetComponent<EnemyController>();
+                    SetupEnemyController(newEnemy);
 
-                aliveEnemies++;
+                    aliveEnemies++;
 
+                    if (i < (dir.count - 1)) //not last one
+                    {
+                        yield return new WaitForSeconds(dir.waitTime);
+                    }
+                }
+            }
+            else //Just wait
+            {
                 yield return new WaitForSeconds(dir.waitTime);
             }
         }

@@ -13,8 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directories:
   - prefab: {fileID: 1090568405718296, guid: 24c46c394f93fae4fb43522e9e1dbd33, type: 2}
-    waitTime: 0.1
+    waitTime: 1
     count: 3
-  - prefab: {fileID: 1090568405718296, guid: 24c46c394f93fae4fb43522e9e1dbd33, type: 2}
-    waitTime: 2
-    count: 2
