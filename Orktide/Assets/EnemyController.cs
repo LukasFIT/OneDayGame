@@ -1,21 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
     public int health;
+
+    public float arrivalDistance;
+
+    public Transform exit;
     public WaveManager manager;
+    public NavMeshAgent agent;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //fixme
-        transform.position = transform.position + Vector3.forward * Time.deltaTime * 0.2f;
+        if(Vector3.Distance(transform.position, exit.position) <= arrivalDistance)
+        {
+            manager.EnemyReachedExit();
+            manager.EnemyDied();
+            Destroy(gameObject);
+        }
 	}
 
     //fixme
@@ -24,8 +34,19 @@ public class EnemyController : MonoBehaviour {
         health--;
         if(health <= 0)
         {
-            manager.EnemyDied();
-            Destroy(gameObject);
+            Die();
         }
     }
+
+    private void Die()
+    {
+        manager.EnemyDied();
+        Destroy(gameObject);
+    }
+
+    public void StartMovement()
+    {
+        agent.SetDestination(exit.position);
+    }
+
 }

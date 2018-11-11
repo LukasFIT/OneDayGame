@@ -12,6 +12,7 @@ public class WaveManager : MonoBehaviour {
 
     public Transform spawnPoint;
     public Transform enemiesParent;
+    public Transform exit;
 
     private GameController controller;
 
@@ -49,7 +50,7 @@ public class WaveManager : MonoBehaviour {
 
     private void Victory()
     {
-
+        controller.Victory();
     }
 
     public void StartWave()
@@ -63,6 +64,11 @@ public class WaveManager : MonoBehaviour {
     {
         aliveEnemies--;
         //todo: gold,score value
+    }
+
+    public void EnemyReachedExit()
+    {
+        controller.EnemyReachedExit();
     }
 
     private IEnumerator SpawningWave(Wave wave)
@@ -88,5 +94,7 @@ public class WaveManager : MonoBehaviour {
     private void SetupEnemyController(EnemyController controller)
     {
         controller.manager = this;
+        controller.exit = exit;
+        controller.StartMovement();
     }
 }

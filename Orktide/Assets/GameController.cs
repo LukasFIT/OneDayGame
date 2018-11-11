@@ -20,6 +20,25 @@ public class GameController : MonoBehaviour {
 		
 	}
 
+    public void EnemyReachedExit()
+    {
+        life--;
+        if(life <= 0)
+        {
+            Defeat();
+        }
+    }
+
+    private void Defeat()
+    {
+        Debug.Log("Defeat");
+    }
+
+    public void Victory()
+    {
+        Debug.Log("Victory");
+    }
+
     public void WaveFinished()
     {
         Debug.Log("Wave finished");
